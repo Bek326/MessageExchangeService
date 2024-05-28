@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>History</title>
+</head>
+<body>
+<button onclick="loadMessages()">Load Messages</button>
+<ul id="messagesList"></ul>
+
+<script>
+    async function loadMessages() {
+        const from = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+        const to = new Date().toISOString();
+
+        const response = await fetch(`/api/messages?from=${from}&to=${to}`);
+        const messages = await response.json();
+
+        const list = document.getElementById("messagesList");
+        list.innerHTML = '';
+        messages.forEach(message => {
+            const li = document.createElement("li");
+            li.textContent = `${message.orderNumber} - ${message.timestamp} - ${message.content}`;
+            list.appendChild(li);
+        });
+    }
+</script>
+</body>
+</html>

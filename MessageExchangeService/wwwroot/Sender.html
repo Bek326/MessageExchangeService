@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sender</title>
+</head>
+<body>
+<input type="text" id="messageInput" maxlength="128" />
+<button onclick="sendMessage()">Send</button>
+
+<script>
+    async function sendMessage() {
+        const message = {
+            content: document.getElementById('messageInput').value,
+            orderNumber: Date.now() // just an example
+        };
+
+        await fetch('/api/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(message)
+        });
+    }
+</script>
+</body>
+</html>
